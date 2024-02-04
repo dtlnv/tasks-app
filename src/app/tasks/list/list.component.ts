@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { StorageService } from '../../storage/storage.service';
 
 @Component({
-  selector: 'take-home-list-component',
+  selector: 'app-list-component',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })

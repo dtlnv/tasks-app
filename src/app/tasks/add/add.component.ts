@@ -6,7 +6,7 @@ import { StorageService } from '../../storage/storage.service';
 import { faker } from '@faker-js/faker';
 
 @Component({
-  selector: 'take-home-add-component',
+  selector: 'app-add-component',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })

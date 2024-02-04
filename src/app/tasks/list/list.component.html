@@ -1,8 +1,8 @@
 <div class="container">
   <h1>Tasks</h1>
   <h3>Total Tasks: {{ tasksService.tasks.length }}</h3>
-  <take-home-filters-component></take-home-filters-component>
-  <take-home-search-component></take-home-search-component>
+  <app-filters-component></app-filters-component>
+  <app-search-component></app-search-component>
   <div class="action-button-row">
     <button data-testid="add-task" mat-button (click)="onAddTask()">
       Add Task
