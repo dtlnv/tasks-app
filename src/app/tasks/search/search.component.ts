@@ -4,7 +4,7 @@ import { TasksService } from '../tasks.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
-  selector: 'take-home-search-component',
+  selector: 'app-search-component',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })

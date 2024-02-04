@@ -1,6 +1,15 @@
 .container {
   justify-content: space-around;
 
+  h1,
+  h3 {
+    text-align: center !important;
+  }
+
+  .row {
+    margin: 20px auto;
+  }
+
   .action-button-row {
     display: flex;
     justify-content: flex-start;
@@ -16,11 +25,84 @@
 
     mat-card {
       padding: var(--layout-padding);
+      --mdc-elevated-card-container-shape: var(--card-border-radius);
+
       &.complete {
-        background-color: var(--success-color);
+        opacity: 0.5;
+        mat-card-title label {
+          text-decoration: line-through;
+        }
       }
+
+      .low-priority,
+      .high-priority {
+        display: flex;
+        align-items: flex-start;
+        font-size: 14px;
+      }
+
+      .low-priority {
+        color: var(--success-color);
+      }
+
       .high-priority {
         color: var(--error-color);
+      }
+
+      &:hover {
+        background-color: var(--primary-color-light);
+      }
+
+      label {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        word-break: break-word;
+      }
+
+      mat-card-footer {
+        font-size: 12px;
+      }
+
+      .delete-button {
+        background-color: transparent;
+
+        &:hover {
+          background-color: var(--error-color);
+          color: var(--background-light-color);
+        }
+      }
+    }
+  }
+
+  .spase-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .justify-center {
+    display: flex;
+    justify-content: center;
+  }
+
+  .add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--filled-button);
+    color: var(--background-light-color);
+    z-index: 10;
+
+    &:hover {
+      animation: spin 0.75s ease-in-out;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
       }
     }
   }

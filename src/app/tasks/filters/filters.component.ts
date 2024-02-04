@@ -4,7 +4,7 @@ import { Task } from '../task.interface';
 import { MatChipSelectionChange } from '@angular/material/chips';
 
 @Component({
-  selector: 'take-home-filters-component',
+  selector: 'app-filters-component',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
 })

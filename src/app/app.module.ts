@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './tasks/list/list.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -23,7 +23,7 @@ import { SearchComponent } from './tasks/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
-import { StorageService } from './storage/storage.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const routes: Route[] = [
   {
@@ -76,6 +76,8 @@ const routes: Route[] = [
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
   ],
   bootstrap: [AppComponent],

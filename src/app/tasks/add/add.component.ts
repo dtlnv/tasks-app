@@ -6,14 +6,15 @@ import { StorageService } from '../../storage/storage.service';
 import { faker } from '@faker-js/faker';
 
 @Component({
-  selector: 'take-home-add-component',
+  selector: 'app-add-component',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
 export class AddComponent {
+  protected title = 'Add Task';
   protected addTaskForm: FormGroup = new FormGroup({
     title: new FormControl(null, {
-      // TODO: add validators for required and min length 10
+      validators: [Validators.required, Validators.minLength(10)],
     }),
     description: new FormControl(null),
     priority: new FormControl(
@@ -22,27 +23,39 @@ export class AddComponent {
         validators: Validators.required,
       },
     ),
+    scheduledDate: new FormControl(new Date()),
   });
   protected priorities = Object.values(TaskPriority);
+  protected filterDate = (d: Date | null): boolean => {
+    const sevenDaysAhead = new Date();
+    sevenDaysAhead.setDate(sevenDaysAhead.getDate() + 7);
+
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    return d !== null && d > yesterday && d <= sevenDaysAhead;
+  };
 
   constructor(private storageService: StorageService, private router: Router) {}
 
+  /**
+   * Save new task to storage and navigate to home page
+   */
   onSubmit() {
     const newTask: Task = {
       ...this.addTaskForm.getRawValue(),
       uuid: faker.string.uuid(),
       isArchived: false,
-      // TODO: allow user to set scheduled date using MatDatePicker
-      scheduledDate: new Date(),
     };
 
-    // TODO: save updated task to storage
-    // TODO: navigate to home page
-    throw new Error('Not implemented');
+    this.storageService.updateTaskItem(newTask);
+    this.router.navigateByUrl('/');
   }
 
+  /**
+   * Just navigate to home page
+   */
   onCancel(): void {
-    // TODO: navigate to home page
-    throw new Error('Not implemented');
+    this.router.navigateByUrl('/');
   }
 }

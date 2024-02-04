@@ -1,6 +1,10 @@
 .container {
   justify-content: space-around;
 
+  .mat-mdc-standard-chip {
+    --mdc-chip-label-text-font: var(--default-font);
+  }
+
   .tasks {
     display: inline-flex;
     flex-direction: column;
@@ -12,6 +16,7 @@
       &:nth-child(odd) {
         background-color: var(--background-light-color);
       }
+
       &:nth-child(even) {
         background-color: var(--background-dark-color);
       }

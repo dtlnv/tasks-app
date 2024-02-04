@@ -1,9 +1,6 @@
 import { TasksService } from './tasks.service';
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { StorageService } from '../storage/storage.service';
 import { Task, TaskPriority } from './task.interface';
 import { generateTask } from './task.generator';
@@ -17,7 +14,6 @@ class MockStorageService {
 describe('TasksService', () => {
   let service: TasksService;
   let storageService: StorageService;
-  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,7 +24,6 @@ describe('TasksService', () => {
       ],
     });
 
-    httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(TasksService);
     storageService = TestBed.inject(StorageService);
   });
@@ -80,7 +75,29 @@ describe('TasksService', () => {
       expect(service.tasks.length).toEqual(1);
     });
 
-    it.todo('should filter task by scheduledDate key');
+    it('should filter task by scheduledDate key', () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      service.tasks = [
+        generateTask({ scheduledDate: new Date() }),
+        generateTask({ scheduledDate: tomorrow }),
+      ];
+      service.filterTask('scheduledDate');
+      expect(service.tasks.length).toEqual(1);
+    });
+
+    it(`should not fail if scheduledDate is not a valid date`, () => {
+      service.tasks = [
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        generateTask({ scheduledDate: 'not a valid date' }),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        generateTask({ scheduledDate: 'not a valid date' }),
+      ];
+      service.filterTask('scheduledDate');
+      expect(service.tasks.length).toEqual(0);
+    });
   });
 
   describe('searchTask', () => {
@@ -102,6 +119,13 @@ describe('TasksService', () => {
       expect(service.tasks.length).toEqual(2);
     });
 
-    it.todo('should search task list for a fuzzy match on title');
+    it('should search task list for a fuzzy match on title', () => {
+      service.tasks = [
+        generateTask({ title: 'Take home assignment' }),
+        generateTask({ title: 'Thank you for your time' }),
+      ];
+      service.searchTask('hoem');
+      expect(service.tasks.length).toEqual(1);
+    });
   });
 });

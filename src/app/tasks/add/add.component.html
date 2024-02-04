@@ -1,15 +1,19 @@
 <div class="container">
-  <h1>Add Task</h1>
+  <h1>{{ title }}</h1>
   <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title" />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <textarea rows="4" matInput formControlName="description"> </textarea>
     </mat-form-field>
-    <mat-form-field data-testid="priority-form-field" floatLabel="always">
+    <mat-form-field
+      appearance="outline"
+      data-testid="priority-form-field"
+      floatLabel="always"
+    >
       <mat-label>Priority</mat-label>
       <mat-select
         formControlName="priority"
@@ -21,6 +25,21 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [matDatepickerFilter]="filterDate"
+        formControlName="scheduledDate"
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
     <div class="action-button-row">
       <button
         data-testid="add-task"
@@ -28,13 +47,14 @@
         color="primary"
         [disabled]="addTaskForm.invalid"
       >
+        <mat-icon>add</mat-icon>
         Add
       </button>
       <button
         type="button"
         data-testid="cancel"
+        class="cancel-button"
         mat-flat-button
-        color="accent"
         (click)="onCancel()"
       >
         Cancel
