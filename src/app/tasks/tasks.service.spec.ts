@@ -75,7 +75,16 @@ describe('TasksService', () => {
       expect(service.tasks.length).toEqual(1);
     });
 
-    it.todo('should filter task by scheduledDate key');
+    it('should filter task by scheduledDate key', () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      service.tasks = [
+        generateTask({ scheduledDate: new Date() }),
+        generateTask({ scheduledDate: tomorrow }),
+      ];
+      service.filterTask('scheduledDate');
+      expect(service.tasks.length).toEqual(1);
+    });
   });
 
   describe('searchTask', () => {
@@ -97,6 +106,15 @@ describe('TasksService', () => {
       expect(service.tasks.length).toEqual(2);
     });
 
-    it.todo('should search task list for a fuzzy match on title');
+    it('should search task list for a fuzzy match on title', () => {
+      service.tasks = [
+        generateTask({ title: 'Thank you for your time' }),
+        generateTask({ title: 'Take home assignment' }),
+      ];
+      const uuid = service.tasks[1].uuid;
+      service.searchTask('hoem');
+      expect(service.tasks.length).toEqual(1);
+      expect(service.tasks[0].uuid).toEqual(uuid);
+    });
   });
 });

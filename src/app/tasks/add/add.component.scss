@@ -1,5 +1,8 @@
 .container {
   justify-content: space-around;
+  h1 {
+    text-align: center;
+  }
 
   form {
     display: inline-flex;
@@ -12,6 +15,10 @@
       display: flex;
       justify-content: center;
       gap: var(--layout-gap-size);
+
+      .cancel-button {
+        background-color: transparent;
+      }
     }
   }
 }
