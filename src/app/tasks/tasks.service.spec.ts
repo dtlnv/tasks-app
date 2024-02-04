@@ -1,9 +1,6 @@
 import { TasksService } from './tasks.service';
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { StorageService } from '../storage/storage.service';
 import { Task, TaskPriority } from './task.interface';
 import { generateTask } from './task.generator';
@@ -17,7 +14,6 @@ class MockStorageService {
 describe('TasksService', () => {
   let service: TasksService;
   let storageService: StorageService;
-  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,7 +24,6 @@ describe('TasksService', () => {
       ],
     });
 
-    httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(TasksService);
     storageService = TestBed.inject(StorageService);
   });
