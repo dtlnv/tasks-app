@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './tasks/list/list.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -17,12 +17,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { Route, RouterModule } from '@angular/router';
-import { AddComponent } from './tasks/add/add.component';
+import { SaveComponent } from './tasks/save/save.component';
 import { FiltersComponent } from './tasks/filters/filters.component';
 import { SearchComponent } from './tasks/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const routes: Route[] = [
   {
@@ -36,8 +37,13 @@ const routes: Route[] = [
       {
         path: 'add',
         pathMatch: 'full',
-        component: AddComponent,
+        component: SaveComponent,
       },
+      {
+        path: 'edit/:id',
+        pathMatch: 'full',
+        component: SaveComponent,
+      }
     ],
   },
   {
@@ -51,7 +57,7 @@ const routes: Route[] = [
     AppComponent,
     ListComponent,
     FiltersComponent,
-    AddComponent,
+    SaveComponent,
     SearchComponent,
   ],
   imports: [
@@ -75,6 +81,8 @@ const routes: Route[] = [
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
   ],
   bootstrap: [AppComponent],
