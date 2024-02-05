@@ -38,7 +38,7 @@ export class ListComponent {
       item.isArchived = true;
       this.storageService.updateTaskItem(item);
       this.tasksService.tasks = this.tasksService.tasks.filter(
-        (task: Task) => task.uuid !== item.uuid,
+        (task: Task) => task.uuid !== item.uuid
       );
     }
   }
@@ -48,6 +48,14 @@ export class ListComponent {
    */
   onAddTask(): void {
     this.router.navigate(['add']);
+  }
+
+  /**
+   * Navigate to edit task page
+   * @param item Task
+   */
+  onEditTask(item: Task): void {
+    this.router.navigate(['edit', item.uuid]);
   }
 
   private async getTaskList(): Promise<void> {

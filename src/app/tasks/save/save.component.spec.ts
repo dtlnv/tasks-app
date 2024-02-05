@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorageService } from '../../storage/storage.service';
-import { AddComponent } from './add.component';
+import { SaveComponent } from './save.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,10 +22,10 @@ class MockStorageService {
   }
 }
 
-describe('AddComponent', () => {
-  let fixture: ComponentFixture<AddComponent>;
+describe('SaveComponent', () => {
+  let fixture: ComponentFixture<SaveComponent>;
   let loader: HarnessLoader;
-  let component: AddComponent;
+  let component: SaveComponent;
   let storageService: StorageService;
   let router: Router;
 
@@ -44,7 +44,7 @@ describe('AddComponent', () => {
         MatDatepickerModule,
         MatIconModule,
       ],
-      declarations: [AddComponent],
+      declarations: [SaveComponent],
       providers: [{ provide: StorageService, useClass: MockStorageService }],
     }).compileComponents();
   });
@@ -52,7 +52,7 @@ describe('AddComponent', () => {
   beforeEach(() => {
     router = TestBed.inject(Router);
     storageService = TestBed.inject(StorageService);
-    fixture = TestBed.createComponent(AddComponent);
+    fixture = TestBed.createComponent(SaveComponent);
     component = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
@@ -71,7 +71,7 @@ describe('AddComponent', () => {
     jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
     jest.spyOn(component, 'onCancel');
     const cancelButton = await loader.getHarness(
-      MatButtonHarness.with({ selector: '[data-testid="cancel"]' }),
+      MatButtonHarness.with({ selector: '[data-testid="cancel"]' })
     );
     await cancelButton.click();
     fixture.detectChanges();
@@ -81,14 +81,14 @@ describe('AddComponent', () => {
 
   it(`should prevent adding task without a valid title`, async () => {
     const addButton = await loader.getHarness(
-      MatButtonHarness.with({ selector: '[data-testid="add-task"]' }),
+      MatButtonHarness.with({ selector: '[data-testid="save-task"]' })
     );
     expect(await addButton.isDisabled()).toBeTruthy();
-    component['addTaskForm'].controls['title'].setValue('Invalid');
+    component['saveTaskForm'].controls['title'].setValue('Invalid');
     fixture.detectChanges();
     expect(await addButton.isDisabled()).toBeTruthy();
-    component['addTaskForm'].controls['title'].setValue(
-      'This is a valid title',
+    component['saveTaskForm'].controls['title'].setValue(
+      'This is a valid title'
     );
     fixture.detectChanges();
     expect(await addButton.isDisabled()).toBeFalsy();
@@ -98,13 +98,13 @@ describe('AddComponent', () => {
     jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
     jest.spyOn(component, 'onSubmit');
     jest.spyOn(storageService, 'updateTaskItem').mockResolvedValue();
-    component['addTaskForm'].controls['title'].setValue('Adding a test task');
-    component['addTaskForm'].controls['description'].setValue(
-      'This task should be added to the list',
+    component['saveTaskForm'].controls['title'].setValue('Adding a test task');
+    component['saveTaskForm'].controls['description'].setValue(
+      'This task should be added to the list'
     );
     fixture.detectChanges();
     const addButton = await loader.getHarness(
-      MatButtonHarness.with({ selector: '[data-testid="add-task"]' }),
+      MatButtonHarness.with({ selector: '[data-testid="save-task"]' })
     );
     await addButton.click();
     fixture.detectChanges();
@@ -115,7 +115,7 @@ describe('AddComponent', () => {
         isArchived: false,
         title: 'Adding a test task',
         description: 'This task should be added to the list',
-      }),
+      })
     );
     expect(router.navigateByUrl).toHaveBeenCalledWith('/');
   });
@@ -127,14 +127,14 @@ describe('AddComponent', () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    component['addTaskForm'].controls['title'].setValue('Adding a test task');
-    component['addTaskForm'].controls['description'].setValue(
-      'This task should be added to the list',
+    component['saveTaskForm'].controls['title'].setValue('Adding a test task');
+    component['saveTaskForm'].controls['description'].setValue(
+      'This task should be added to the list'
     );
-    component['addTaskForm'].controls['scheduledDate'].setValue(tomorrow);
+    component['saveTaskForm'].controls['scheduledDate'].setValue(tomorrow);
     fixture.detectChanges();
     const addButton = await loader.getHarness(
-      MatButtonHarness.with({ selector: '[data-testid="add-task"]' }),
+      MatButtonHarness.with({ selector: '[data-testid="save-task"]' })
     );
     await addButton.click();
     fixture.detectChanges();
@@ -145,7 +145,7 @@ describe('AddComponent', () => {
         title: 'Adding a test task',
         description: 'This task should be added to the list',
         scheduledDate: tomorrow,
-      }),
+      })
     );
   });
 
@@ -156,14 +156,14 @@ describe('AddComponent', () => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
-    component['addTaskForm'].controls['title'].setValue('Adding a test task');
-    component['addTaskForm'].controls['description'].setValue(
-      'This task should not be added to the list',
+    component['saveTaskForm'].controls['title'].setValue('Adding a test task');
+    component['saveTaskForm'].controls['description'].setValue(
+      'This task should not be added to the list'
     );
-    component['addTaskForm'].controls['scheduledDate'].setValue(yesterday);
+    component['saveTaskForm'].controls['scheduledDate'].setValue(yesterday);
     fixture.detectChanges();
     const addButton = await loader.getHarness(
-      MatButtonHarness.with({ selector: '[data-testid="add-task"]' }),
+      MatButtonHarness.with({ selector: '[data-testid="save-task"]' })
     );
     await addButton.click();
     fixture.detectChanges();
@@ -178,14 +178,16 @@ describe('AddComponent', () => {
     const eightDaysAhead = new Date();
     eightDaysAhead.setDate(eightDaysAhead.getDate() + 8);
 
-    component['addTaskForm'].controls['title'].setValue('Adding a test task');
-    component['addTaskForm'].controls['description'].setValue(
-      'This task should not be added to the list',
+    component['saveTaskForm'].controls['title'].setValue('Adding a test task');
+    component['saveTaskForm'].controls['description'].setValue(
+      'This task should not be added to the list'
     );
-    component['addTaskForm'].controls['scheduledDate'].setValue(eightDaysAhead);
+    component['saveTaskForm'].controls['scheduledDate'].setValue(
+      eightDaysAhead
+    );
     fixture.detectChanges();
     const addButton = await loader.getHarness(
-      MatButtonHarness.with({ selector: '[data-testid="add-task"]' }),
+      MatButtonHarness.with({ selector: '[data-testid="save-task"]' })
     );
     await addButton.click();
     fixture.detectChanges();

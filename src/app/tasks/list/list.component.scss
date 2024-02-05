@@ -64,9 +64,12 @@
         font-size: 12px;
       }
 
-      .delete-button {
+      .delete-button,
+      .edit-button {
         background-color: transparent;
+      }
 
+      .delete-button {
         &:hover {
           background-color: var(--error-color);
           color: var(--background-light-color);

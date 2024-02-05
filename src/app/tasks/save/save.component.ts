@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Task, TaskPriority } from '../task.interface';
@@ -6,13 +6,14 @@ import { StorageService } from '../../storage/storage.service';
 import { faker } from '@faker-js/faker';
 
 @Component({
-  selector: 'app-add-component',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss'],
+  selector: 'app-save-component',
+  templateUrl: './save.component.html',
+  styleUrls: ['./save.component.scss'],
 })
-export class AddComponent {
+export class SaveComponent implements OnInit {
   protected title = 'Add Task';
-  protected addTaskForm: FormGroup = new FormGroup({
+  protected taskId: string | undefined;
+  protected saveTaskForm: FormGroup = new FormGroup({
     title: new FormControl(null, {
       validators: [Validators.required, Validators.minLength(10)],
     }),
@@ -28,6 +29,18 @@ export class AddComponent {
   protected priorities = Object.values(TaskPriority);
 
   constructor(private storageService: StorageService, private router: Router) {}
+
+  ngOnInit(): void {
+    if (this.router.url.includes('edit')) {
+      this.taskId = this.router.url.split('/').pop();
+      if (this.taskId) {
+        this.title = 'Edit Task';
+        this.storageService.getTask(this.taskId).then((task) => {
+          this.saveTaskForm.patchValue(task);
+        });
+      }
+    }
+  }
 
   /**
    * Get minimum date for scheduled date
@@ -53,13 +66,17 @@ export class AddComponent {
    * Save new task to storage and navigate to home page
    */
   onSubmit() {
-    const newTask: Task = {
-      ...this.addTaskForm.getRawValue(),
+    const task: Task = {
+      ...this.saveTaskForm.getRawValue(),
       uuid: faker.string.uuid(),
       isArchived: false,
     };
 
-    this.storageService.updateTaskItem(newTask);
+    if (this.taskId) {
+      task.uuid = this.taskId;
+    }
+
+    this.storageService.updateTaskItem(task);
     this.router.navigateByUrl('/');
   }
 

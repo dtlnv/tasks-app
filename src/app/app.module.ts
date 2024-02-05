@@ -17,7 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { Route, RouterModule } from '@angular/router';
-import { AddComponent } from './tasks/add/add.component';
+import { SaveComponent } from './tasks/save/save.component';
 import { FiltersComponent } from './tasks/filters/filters.component';
 import { SearchComponent } from './tasks/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -37,8 +37,13 @@ const routes: Route[] = [
       {
         path: 'add',
         pathMatch: 'full',
-        component: AddComponent,
+        component: SaveComponent,
       },
+      {
+        path: 'edit/:id',
+        pathMatch: 'full',
+        component: SaveComponent,
+      }
     ],
   },
   {
@@ -52,7 +57,7 @@ const routes: Route[] = [
     AppComponent,
     ListComponent,
     FiltersComponent,
-    AddComponent,
+    SaveComponent,
     SearchComponent,
   ],
   imports: [
