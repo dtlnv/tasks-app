@@ -1,6 +1,6 @@
 <div class="container">
   <h1>{{ title }}</h1>
-  <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="saveTaskForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title" />
@@ -43,13 +43,13 @@
     </mat-form-field>
     <div class="action-button-row">
       <button
-        data-testid="add-task"
+        data-testid="save-task"
         mat-flat-button
         color="primary"
-        [disabled]="addTaskForm.invalid"
+        [disabled]="saveTaskForm.invalid"
       >
-        <mat-icon>add</mat-icon>
-        Add
+        <mat-icon>save</mat-icon>
+        Save
       </button>
       <button
         type="button"

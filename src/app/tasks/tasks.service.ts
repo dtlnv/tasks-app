@@ -12,6 +12,9 @@ export class TasksService {
 
   async getTasksFromStorage(): Promise<void> {
     this.tasks = await this.storageService.getTasks();
+    this.tasks = this.tasks.sort((a, b) =>
+      a.scheduledDate > b.scheduledDate ? 1 : -1
+    );
     this.filterTask('isArchived');
   }
 

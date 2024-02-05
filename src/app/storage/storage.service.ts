@@ -18,8 +18,8 @@ export class StorageService {
   }
 
   // Create / Update
-  async addTaskItem(item: Task) {
-    await this.addTask(item);
+  async saveTaskItem(item: Task) {
+    await this.saveTask(item);
   }
 
   async updateTaskItem(item: Task) {
@@ -64,7 +64,7 @@ export class StorageService {
     });
   }
 
-  private addTask(item: Task) {
+  private saveTask(item: Task) {
     const dbPromise = openDB(`${this.dbName}`, this.dbVersion);
     return dbPromise.then((db) => {
       return db.add(this.tasks, item, item.uuid);

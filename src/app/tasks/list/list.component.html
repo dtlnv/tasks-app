@@ -42,16 +42,27 @@
           *ngIf="item.uuid !== '1' && item.uuid !== '2'"
         >
           <mat-card-footer>
-            {{ item.scheduledDate | date : 'short' }}
+            {{ item.scheduledDate | date : "short" }}
           </mat-card-footer>
-          <button
-            data-testid="delete-task"
-            class="delete-button"
-            mat-flat-button
-            (click)="onDeleteTask(item)"
-          >
-            <mat-icon>delete</mat-icon>Delete
-          </button>
+          <div>
+            <button
+              data-testid="edit-task"
+              class="edit-button"
+              mat-flat-button
+              (click)="onEditTask(item)"
+            >
+              <mat-icon>edit</mat-icon>Edit
+            </button>
+
+            <button
+              data-testid="delete-task"
+              class="delete-button"
+              mat-flat-button
+              (click)="onDeleteTask(item)"
+            >
+              <mat-icon>delete</mat-icon>Delete
+            </button>
+          </div>
         </mat-card-actions>
       </mat-card>
     </ng-container>

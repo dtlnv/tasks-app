@@ -1,6 +1,6 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@import './variables';
+@import "./variables";
 @include mat.core();
 
 $dark-theme: mat.define-dark-theme(
@@ -28,6 +28,7 @@ $light-theme: mat.define-light-theme(
 @media (prefers-color-scheme: light) {
   @include mat.all-component-themes($light-theme);
 }
+
 @media (prefers-color-scheme: dark) {
   @include mat.all-component-themes($dark-theme);
 }
